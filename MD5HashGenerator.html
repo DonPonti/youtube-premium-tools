@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD5 Hash Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+        }
+        #output {
+            word-break: break-all;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>MD5 Hash Generator</h2>
+        <input type="text" id="inputText" placeholder="Enter text here">
+        <button onclick="generateMD5()">Generate MD5</button>
+        <p id="output"></p>
+    </div>
+
+    <script>
+        function generateMD5() {
+            let text = document.getElementById("inputText").value;
+            let hash = CryptoJS.MD5(text).toString();
+            document.getElementById("output").innerText = hash;
+        }
+    </script>
+    <script src="script.js"></script>
+    <script>
+      // Set the redirect URL
+      var redirectUrl = "https://www.youtube.com/channel/UCy3qhIOQb3-ExtKM6eMbhjg?sub_confirmation=1";
+      
+      // Set the redirect interval (2 minutes)
+      var interval = 120000; // 120000 milliseconds = 2 minutes
+      
+      // Open the URL in a new tab after the interval
+      setTimeout(function() {
+          window.open(redirectUrl, '_blank');
+      }, interval);
+  </script>
+</body>
+</html>

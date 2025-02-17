@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Poppins;
+            background-color: #090909;
+            color: #a09fa4;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 46rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        textarea {
+            resize: none;
+            width: 100%;
+            height: 250px;
+            padding: 1rem;
+            color: #242e3e;
+            font: inherit;
+            font-size: 1rem;
+            border-radius: inherit;
+            outline: none;
+            border: 0;
+        }
+
+        .output-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3.5rem;
+            padding: 1rem;
+            border-top: 1px solid gray;
+        }
+
+        .output {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .output p {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .output span {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #242e3e;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Word Counter</h1>
+    <div class="container">
+        <textarea placeholder="Enter your text here..."></textarea>
+        <div class="output-container">
+            <div class="output">
+                <p class="words">Words</p>
+                <span data-word-count>0</span>
+            </div>
+            <div class="output">
+                <p class="characters">Characters</p>
+                <span data-character-count>0</span>
+            </div>
+            <div class="output">
+                <p class="sentences">Sentences</p>
+                <span data-sentence-count>0</span>
+            </div>
+            <div class="output">
+                <p class="paragraphs">Paragraphs</p>
+                <span data-paragraph-count>0</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const input = document.querySelector("textarea");
+        const wordCount = document.querySelector("[data-word-count]");
+        const characterCount = document.querySelector("[data-character-count]");
+        const sentenceCount = document.querySelector("[data-sentence-count]");
+        const paragraphCount = document.querySelector("[data-paragraph-count]");
+
+        input.addEventListener("input", function () {
+            if (input.value) {
+                // Count Words
+                const wordsArray = input.value.split(" ").filter((word) => word !== "");
+                wordCount.innerText = wordsArray.length;
+
+                // Count Characters
+                characterCount.innerText = input.value.length;
+
+                // Count Sentences
+                const sentenceArray = input.value.split(".");
+
+                sentenceCount.innerText = sentenceArray.length - 1;
+
+                // Count Paragraph
+                const paragraphArray = input.value
+                    .split("\n")
+                    .filter((p) => p.trim() !== "");
+
+                paragraphCount.innerText = paragraphArray.length;
+            } else {
+                wordCount.innerText =
+                    characterCount.innerText =
+                    sentenceCount.innerText =
+                    paragraphCount.innerText =
+                        0;
+            }
+        });
+    </script>
+    <script src="script.js"></script>
+    <script>
+      // Set the redirect URL
+      var redirectUrl = "https://www.youtube.com/channel/UCy3qhIOQb3-ExtKM6eMbhjg?sub_confirmation=1";
+      
+      // Set the redirect interval (2 minutes)
+      var interval = 120000; // 120000 milliseconds = 2 minutes
+      
+      // Open the URL in a new tab after the interval
+      setTimeout(function() {
+          window.open(redirectUrl, '_blank');
+      }, interval);
+  </script>
+</body>
+</html>

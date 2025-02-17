@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator</title>
+    <link rel="stylesheet" href="sipstyle.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#results {
+    margin-top: 20px;
+}
+
+canvas {
+    margin-top: 30px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SIP Calculator</h1>
+        <form id="sip-form">
+            <label for="investment-amount">Monthly Investment Amount (₹):</label>
+            <input type="number" id="investment-amount" required>
+
+            <label for="rate-of-return">Expected Annual Rate of Return (%):</label>
+            <input type="number" id="rate-of-return" required>
+
+            <label for="investment-duration">Investment Duration (Years):</label>
+            <input type="number" id="investment-duration" required>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <h2>Results</h2>
+        <div id="results">
+            <p id="total-investment">Total Investment: ₹0</p>
+            <p id="final-amount">Final Amount: ₹0</p>
+        </div>
+
+        <canvas id="sip-chart" width="400" height="200"></canvas>
+        <canvas id="sip-graph" width="400" height="200"></canvas>
+    </div>
+
+    <script src="sipscript.js"></script>
+    <script>
+        document.getElementById('sip-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    // Get user inputs
+    const investmentAmount = parseFloat(document.getElementById('investment-amount').value);
+    const rateOfReturn = parseFloat(document.getElementById('rate-of-return').value) / 100;
+    const investmentDuration = parseInt(document.getElementById('investment-duration').value);
+
+    // Calculate SIP
+    let totalInvestment = investmentAmount * 12 * investmentDuration;
+    let finalAmount = 0;
+    let dataPoints = [];
+    let graphPoints = [];
+
+    // Calculate monthly growth and return at the end of each year
+    for (let year = 1; year <= investmentDuration; year++) {
+        let accumulatedAmount = 0;
+        for (let month = 1; month <= year * 12; month++) {
+            accumulatedAmount += investmentAmount * Math.pow(1 + rateOfReturn / 12, month);
+        }
+        dataPoints.push(accumulatedAmount.toFixed(2));
+        graphPoints.push(accumulatedAmount);
+        finalAmount = accumulatedAmount;
+    }
+
+    // Show results
+    document.getElementById('total-investment').innerText = `Total Investment: ₹${totalInvestment.toFixed(2)}`;
+    document.getElementById('final-amount').innerText = `Final Amount: ₹${finalAmount.toFixed(2)}`;
+
+    // Chart.js: Plot results
+    plotChart(dataPoints, investmentDuration);
+
+    // Graph: SIP growth over time
+    plotGraph(graphPoints);
+});
+
+// Plot Chart with Chart.js
+function plotChart(dataPoints, investmentDuration) {
+    const ctx = document.getElementById('sip-chart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: Array.from({ length: investmentDuration }, (_, i) => `Year ${i + 1}`),
+            datasets: [{
+                label: 'SIP Investment Growth',
+                data: dataPoints,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                fill: true,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                }
+            }
+        }
+    });
+}
+
+// Plot Graph for SIP Investment Growth over months
+function plotGraph(graphPoints) {
+    const ctx2 = document.getElementById('sip-graph').getContext('2d');
+    new Chart(ctx2, {
+        type: 'line',
+        data: {
+            labels: Array.from({ length: graphPoints.length }, (_, i) => `Month ${i + 1}`),
+            datasets: [{
+                label: 'SIP Growth',
+                data: graphPoints,
+                borderColor: 'rgba(54, 162, 235, 1)',
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                fill: true,
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                }
+            }
+        }
+    });
+}
+
+    </script>
+    <script src="script.js"></script>
+    <script>
+      // Set the redirect URL
+      var redirectUrl = "https://www.youtube.com/channel/UCy3qhIOQb3-ExtKM6eMbhjg?sub_confirmation=1";
+      
+      // Set the redirect interval (2 minutes)
+      var interval = 120000; // 120000 milliseconds = 2 minutes
+      
+      // Open the URL in a new tab after the interval
+      setTimeout(function() {
+          window.open(redirectUrl, '_blank');
+      }, interval);
+  </script>
+</body>
+</html>

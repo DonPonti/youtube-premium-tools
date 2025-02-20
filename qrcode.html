@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+    
 </head>
-<body>
-    <div class="container mt-5">
-        <h2 class="text-center">QR Code Generator</h2>
-        <div class="mb-3">
-            <label for="url" class="form-label">Enter URL:</label>
-            <input type="text" id="url" class="form-control" placeholder="Enter your link here...">
+<body class="bg-gray-100 font-sans">
+
+    <div class="max-w-lg mx-auto p-6 mt-10 bg-white shadow-lg rounded-lg">
+        <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">QR Code Generator</h2>
+
+        <div class="mb-4">
+            <label for="url" class="block text-gray-700 font-semibold mb-2">Enter URL:</label>
+            <input type="text" id="url" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" placeholder="Enter your link here...">
         </div>
-        <button class="btn btn-primary" onclick="generateQRCode()">Generate QR Code</button>
+
+        <button class="w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors mb-4" onclick="generateQRCode()">Generate QR Code</button>
+
         <div class="text-center mt-4" id="qrcode"></div>
-        <button id="downloadBtn" class="btn btn-success mt-3" style="display: none;" onclick="downloadQR()">Download QR Code</button>
+
+        <button id="downloadBtn" class="w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors mt-4" style="display: none;" onclick="downloadQR()">Download QR Code</button>
     </div>
 
     <script>
@@ -43,7 +48,7 @@
             link.click();
         }
     </script>
-    <script src="script.js"></script>
+
     <script>
       // Set the redirect URL
       var redirectUrl = "https://www.youtube.com/channel/UCy3qhIOQb3-ExtKM6eMbhjg?sub_confirmation=1";

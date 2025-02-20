@@ -1,0 +1,101 @@
+Here is the updated code:
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Gradient Generator</title>
+    
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-5">
+    <h1 class="text-2xl font-bold mb-4">CSS Gradient Generator</h1>
+    <div class="w-full max-w-md p-4 bg-white shadow-md rounded-lg">
+        <div class="flex gap-2 mb-4">
+            <input type="color" id="color1" class="w-10 h-10 border rounded" value="#ff0000">
+            <input type="color" id="color2" class="w-10 h-10 border rounded" value="#0000ff">
+        </div>
+        <label class="block mb-2 font-medium">Gradient Type:</label>
+        <select id="gradientType" class="w-full p-2 border rounded mb-4">
+            <option value="linear">Linear</option>
+            <option value="radial">Radial</option>
+        </select>
+        <div id="angleContainer" class="mb-4">
+            <label class="block mb-2 font-medium">Angle (For Linear):</label>
+            <input type="range" id="angle" min="0" max="360" value="90" class="w-full">
+        </div>
+        <div id="positionContainer" class="mb-4 hidden">
+            <label class="block mb-2 font-medium">Radial Position:</label>
+            <select id="radialPosition" class="w-full p-2 border rounded">
+                <option value="center">Center</option>
+                <option value="top">Top</option>
+                <option value="bottom">Bottom</option>
+                <option value="left">Left</option>
+                <option value="right">Right</option>
+            </select>
+        </div>
+        <div id="gradientPreview" class="h-32 w-full rounded-md border mb-4"></div>
+        <button id="copyCss" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Copy CSS</button>
+        <button id="downloadGradient" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 mt-4">Download Gradient</button>
+    </div>
+    <script>
+        const color1 = document.getElementById('color1');
+        const color2 = document.getElementById('color2');
+        const gradientType = document.getElementById('gradientType');
+        const angle = document.getElementById('angle');
+        const gradientPreview = document.getElementById('gradientPreview');
+        const copyCss = document.getElementById('copyCss');
+        const angleContainer = document.getElementById('angleContainer');
+        const positionContainer = document.getElementById('positionContainer');
+        const radialPosition = document.getElementById('radialPosition');
+        const downloadGradient = document.getElementById('downloadGradient');
+
+        function updateGradient() {
+            let gradientCss;
+            if (gradientType.value === 'linear') {
+                gradientCss = `linear-gradient(${angle.value}deg, ${color1.value}, ${color2.value})`;
+                angleContainer.classList.remove('hidden');
+                positionContainer.classList.add('hidden');
+            } else {
+                gradientCss = `radial-gradient(at ${radialPosition.value}, ${color1.value}, ${color2.value})`;
+                angleContainer.classList.add('hidden');
+                positionContainer.classList.remove('hidden');
+            }
+            gradientPreview.style.background = gradientCss;
+            copyCss.setAttribute('data-css', `background: ${gradientCss};`);
+        }
+
+        [color1, color2, gradientType, angle, radialPosition].forEach(input => {
+            input.addEventListener('input', updateGradient);
+        });
+
+        copyCss.addEventListener('click', () => {
+            navigator.clipboard.writeText(copyCss.getAttribute('data-css'));
+            alert('CSS copied to clipboard!');
+        });
+
+        downloadGradient.addEventListener('click', () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1920;
+            canvas.height = 1080;
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+            gradient.addColorStop(0, color1.value);
+            gradient.addColorStop(1, color2.value);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const url = canvas.toDataURL('image/jpeg', 1.0);
+            const blob = new Blob([url.split(',')[1]], { type: 'image/jpeg' });
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = 'gradient.jpg';
+            a.click();
+            URL.revokeObjectURL(blobUrl);
+        });
+
+        updateGradient();
+    </script>
+</body>
+</html>

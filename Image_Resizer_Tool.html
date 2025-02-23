@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer Tool</title>
+    
+</head>
+<body class="bg-gray-100">
+    <div class="max-w-screen-2xl mx-auto p-4 sm:p-8 lg:p-12">
+        <section class="flex flex-col items-center">
+            <div class="max-w-xl flex flex-col items-center text-center sm:pb-16 lg:pb-18 lg:pt-10">
+                <p class="mb-4 font-semibold text-gray-600 md:mb-3 md:text-lg xl:text-xl">Very proud to introduce</p>
+                <h1 class="mb-4 text-4xl font-bold text-black sm:text-5xl md:mb-4 md:text-6xl">Image Resizer Tool</h1>
+                <p class="mb-6 leading-relaxed text-gray-500 md:mb-4 xl:text-lg">Resize your images effortlessly with our easy-to-use tool. Upload, adjust dimensions, and download resized images quickly and efficiently.</p>
+                <div class="w-full max-w-sm mx-auto">
+                    <table class="w-full text-center mb-4">
+                        <tr>
+                            <td class="py-2">
+                                <label for="imageUpload" class="cursor-pointer inline-block bg-black text-white font-semibold px-4 py-2 rounded-lg transition duration-200 hover:bg-gray-800">Choose File</label>
+                                <input type="file" id="imageUpload" accept="image/*" class="hidden" />
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 p-4 border rounded-lg bg-white shadow-sm mb-6">
+                        <div class="flex items-center gap-2 sm:ml-5">
+                            <label for="width" class="text-gray-600 font-medium">Width:</label>
+                            <input style="width: 100px;" type="number" id="width" min="1" class="w-20 border border-gray-300 rounded-full px-3 py-1 focus:ring-indigo-500" />
+                        </div>
+                        <div class="flex items-center gap-2 sm:mr-2">
+                            <label for="height" class="text-gray-600 font-medium">Height:</label>
+                            <input style="width: 100px;" type="number" id="height" min="1" class="w-20 border-gray-300 border rounded-full px-3 py-1 focus:ring-indigo-500" />
+                        </div>
+                    </div>
+                    <canvas id="canvas" class="w-full border rounded-lg mb-4 shadow-md"></canvas>
+                    <div class="flex flex-wrap justify-center gap-4">
+                        <button id="resizeButton" class="w-full sm:w-auto inline-block rounded-lg bg-black px-8 py-3 text-center text-sm font-semibold text-white transition duration-200 hover:bg-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Resize Image</button>
+                        <button id="downloadButton" class="w-full sm:w-auto inline-block rounded-lg border bg-white px-8 py-3 text-center text-sm font-semibold text-gray-600 transition duration-200 hover:bg-gray-100 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Download</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.getElementById("imageUpload").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+
+            reader.onload = function (e) {
+                const img = new Image();
+                img.onload = function () {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    document.getElementById("width").value = img.width;
+                    document.getElementById("height").value = img.height;
+                };
+                img.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById("resizeButton").addEventListener("click", function () {
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext("2d");
+            const width = document.getElementById("width").value;
+            const height = document.getElementById("height").value;
+            const img = new Image();
+
+img.onload = function () {
+    canvas.width = width;
+    canvas.height = height;
+    ctx.drawImage(img, 0, 0, width, height);
+};
+
+img.src = canvas.toDataURL(); // Use the current canvas image as source
+});
+
+document.getElementById("downloadButton").addEventListener("click", function () {
+const canvas = document.getElementById("canvas");
+const link = document.createElement("a");
+link.download = "resized-image.png";
+link.href = canvas.toDataURL();
+link.click();
+});
+
+const fileInput = document.querySelector(".file-input"),
+filterOptions = document.querySelectorAll(".filter button"),
+filterName = document.querySelector(".filter-info .name"),
+filterValue = document.querySelector(".filter-info .value"),
+filterSlider = document.querySelector(".slider input"),
+rotateOptions = document.querySelectorAll(".rotate button"),
+previewImg = document.querySelector(".preview-img img"),
+resetFilterBtn = document.querySelector(".reset-filter"),
+chooseImgBtn = document.querySelector(".choose-img"),
+saveImgBtn = document.querySelector(".save-img");
+
+// Initial filter values and transformations
+let brightness = "100",
+saturation = "100",
+inversion = "0",
+grayscale = "0";
+let rotate = 0,
+flipHorizontal = 1,
+flipVertical = 1;
+
+// Load image from file input and display in preview
+const loadImage = () => {
+let file = fileInput.files[0];
+if (!file) return;
+previewImg.src = URL.createObjectURL(file);
+previewImg.addEventListener("load", () => {
+    resetFilterBtn.click();
+    document.querySelector(".container").classList.remove("disable");
+});
+};
+
+// Apply current filter settings and transformations to preview image
+const applyFilter = () => {
+previewImg.style.transform = `rotate(${rotate}deg) scale(${flipHorizontal}, ${flipVertical})`;
+previewImg.style.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
+};
+
+// Set up filter options event listeners
+filterOptions.forEach((option) => {
+option.addEventListener("click", () => {
+    document.querySelector(".active").classList.remove("active");
+    option.classList.add("active");
+    filterName.innerText = option.innerText;
+
+    // Set slider max value and current value based on selected filter
+    if (option.id === "brightness") {
+        filterSlider.max = "200";
+        filterSlider.value = brightness;
+        filterValue.innerText = `${brightness}%`;
+    } else if (option.id === "saturation") {
+        filterSlider.max = "200";
+        filterSlider.value = saturation;
+        filterValue.innerText = `${saturation}%`;
+    } else if (option.id === "inversion") {
+        filterSlider.max = "100";
+        filterSlider.value = inversion;
+        filterValue.innerText = `${inversion}%`;
+    } else {
+        filterSlider.max = "100";
+        filterSlider.value = grayscale;
+        filterValue.innerText = `${grayscale}%`;
+    }
+});
+});
+
+// Update filter values and apply changes when slider input changes
+const updateFilter = () => {
+filterValue.innerText = `${filterSlider.value}%`;
+const selectedFilter = document.querySelector(".filter .active");
+
+// Update the relevant filter value based on the selected filter
+if (selectedFilter.id === "brightness") {
+    brightness = filterSlider.value;
+} else if (selectedFilter.id === "saturation") {
+    saturation = filterSlider.value;
+} else if (selectedFilter.id === "inversion") {
+    inversion = filterSlider.value;
+} else {
+    grayscale = filterSlider.value;
+}
+applyFilter(); // Apply updated filter settings
+};
+
+// Set up rotation and flip options event listeners
+rotateOptions.forEach((option) => {
+option.addEventListener("click", () => {
+    if (option.id === "left") {
+        rotate -= 90;
+    } else if (option.id === "right") {
+        rotate += 90;
+    } else if (option.id === "horizontal") {
+        flipHorizontal = flipHorizontal === 1 ? -1 : 1;
+    } else {
+        flipVertical = flipVertical === 1 ? -1 : 1;
+    }
+    applyFilter(); // Apply updated transformations
+});
+});
+
+// Reset all filters and transformations to default values
+const resetFilter = () => {
+brightness = "100";
+saturation = "100";
+inversion = "0";
+grayscale = "0";
+rotate = 0;
+flipHorizontal = 1;
+flipVertical = 1;
+filterOptions[0].click();
+applyFilter(); // Apply default settings
+};
+
+// Save the current image with applied filters and transformations
+const saveImage = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+
+            // Set canvas dimensions to match the image
+            canvas.width = previewImg.naturalWidth;
+            canvas.height = previewImg.naturalHeight;
+
+            // Apply current filter settings
+            ctx.filter = `brightness(${brightness}%) saturate(${saturation}%) invert(${inversion}%) grayscale(${grayscale}%)`;
+
+            // Center the canvas context
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+
+            // Apply rotation if needed
+            if (rotate !== 0) {
+                ctx.rotate((rotate * Math.PI) / 180);
+            }
+
+            // Apply scaling for flips
+            ctx.scale(flipHorizontal, flipVertical);
+
+            // Draw the image centered on the canvas
+            ctx.drawImage(
+                previewImg,
+                -canvas.width / 2,
+                -canvas.height / 2,
+                canvas.width,
+                canvas.height
+            );
+
+            // Create a download link and trigger the download
+            const link = document.createElement("a");
+            link.download = "image.jpg";
+            link.href = canvas.toDataURL();
+            link.click();
+        };
+
+        // Set up event listeners for UI controls
+        filterSlider.addEventListener("input", updateFilter);
+        resetFilterBtn.addEventListener("click", resetFilter);
+        saveImgBtn.addEventListener("click", saveImage);
+        fileInput.addEventListener("change", loadImage);
+        chooseImgBtn.addEventListener("click", () => fileInput.click());
+    </script>
+</body>
+</html>

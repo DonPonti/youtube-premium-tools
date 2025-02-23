@@ -1,0 +1,133 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Watermark Adder</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #watermark-container {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+        }
+        .watermark {
+            position: absolute;
+            opacity: 0.7;
+            cursor: move;
+            transform-origin: center;
+        }
+        #image {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="p-4 bg-white rounded shadow-md w-full max-w-3xl">
+        <h1 class="text-2xl font-bold mb-4">Image Watermark Adder</h1>
+        <input type="file" id="image-input" class="mb-4">
+        <div id="watermark-container" class="relative">
+            <img id="image" src="" alt="Selected Image">
+        </div>
+        <div class="mt-4">
+            <label class="block mb-2">Watermark Text:</label>
+            <input type="text" id="watermark-text" class="border p-2 w-full mb-4">
+            <label class="block mb-2">Watermark Color:</label>
+            <input type="color" id="watermark-color" class="border p-2 w-full mb-4" value="#ffffff">
+            <label class="block mb-2">Watermark Rotation:</label>
+            <input type="range" id="watermark-rotation" min="0" max="360" value="0" class="w-full mb-4">
+            <label class="block mb-2">Position Controls:</label>
+            <div class="grid grid-cols-3 gap-2 mb-4">
+                <button id="up" class="bg-blue-500 text-white p-2 rounded">Up</button>
+                <button id="down" class="bg-blue-500 text-white p-2 rounded">Down</button>
+                <button id="left" class="bg-blue-500 text-white p-2 rounded">Left</button>
+                <button id="right" class="bg-blue-500 text-white p-2 rounded">Right</button>
+            </div>
+            <button id="add-watermark" class="bg-blue-500 text-white p-2 rounded w-full">Add Watermark</button>
+            <button id="download" class="bg-green-500 text-white p-2 rounded w-full mt-2">Download Image</button>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        document.getElementById('image-input').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const img = document.getElementById('image');
+                img.src = e.target.result;
+                img.onload = function () {
+                    img.style.width = `${img.naturalWidth}px`;
+                    img.style.height = `${img.naturalHeight}px`;
+                };
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById('add-watermark').addEventListener('click', function () {
+            const text = document.getElementById('watermark-text').value;
+            const color = document.getElementById('watermark-color').value;
+            const rotation = document.getElementById('watermark-rotation').value;
+            
+            const watermark = document.createElement('div');
+            watermark.className = 'watermark text-xl font-bold';
+            watermark.style.color = color;
+            watermark.textContent = text;
+            watermark.style.top = '10px';
+            watermark.style.left = '10px';
+            watermark.style.transform = `rotate(${rotation}deg)`;
+            
+            const container = document.getElementById('watermark-container');
+            container.appendChild(watermark);
+        });
+
+        function adjustWatermarkPosition(direction) {
+            const watermark = document.querySelector('.watermark');
+            if (!watermark) return;
+            const step = 10;
+            
+            let currentTop = parseInt(watermark.style.top) || 0;
+            let currentLeft = parseInt(watermark.style.left) || 0;
+            
+            switch (direction) {
+                case 'up':
+                    watermark.style.top = `${Math.max(currentTop - step, 0)}px`;
+                    break;
+                case 'down':
+                    watermark.style.top = `${currentTop + step}px`;
+                    break;
+                case 'left':
+                    watermark.style.left = `${Math.max(currentLeft - step, 0)}px`;
+                    break;
+                case 'right':
+                    watermark.style.left = `${currentLeft + step}px`;
+                    break;
+            }
+        }
+
+        document.getElementById('up').addEventListener('click', () => adjustWatermarkPosition('up'));
+        document.getElementById('down').addEventListener('click', () => adjustWatermarkPosition('down'));
+        document.getElementById('left').addEventListener('click', () => adjustWatermarkPosition('left'));
+        document.getElementById('right').addEventListener('click', () => adjustWatermarkPosition('right'));
+
+        document.getElementById('watermark-rotation').addEventListener('input', function () {
+            const watermark = document.querySelector('.watermark');
+            if (watermark) {
+                watermark.style.transform = `rotate(${this.value}deg)`;
+            }
+        });
+
+        document.getElementById('download').addEventListener('click', function () {
+            const container = document.getElementById('watermark-container');
+            html2canvas(container).then(canvas => {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL('image/png');
+                link.download = 'watermarked-image.png';
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Converter</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold text-center mb-8">Unit Converter</h1>
+
+    <!-- Converter Section -->
+    <div class="flex flex-wrap gap-8">
+      <!-- Length Converter -->
+      <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4">Length Converter</h2>
+        <form>
+          <div class="flex flex-wrap gap-4 mb-4">
+            <input type="number" id="length-input" class="w-full md:w-1/2">
+            <select id="length-unit" class="w-full md:w-1/2">
+              <option value="meters">Meters</option>
+              <option value="centimeters">Centimeters</option>
+              <option value="millimeters">Millimeters</option>
+              <option value="kilometers">Kilometers</option>
+              <option value="inches">Inches</option>
+              <option value="feet">Feet</option>
+              <option value="yards">Yards</option>
+              <option value="miles">Miles</option>
+              <option value="nautical-miles">Nautical miles</option>
+              <option value="light-years">Light-years</option>
+            </select>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertLength()">Convert</button>
+        </form>
+        <p id="length-result"></p>
+      </div>
+
+      <!-- Area Converter -->
+      <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4">Area Converter</h2>
+        <form>
+          <div class="flex flex-wrap gap-4 mb-4">
+            <input type="number" id="area-input" class="w-full md:w-1/2">
+            <select id="area-unit" class="w-full md:w-1/2">
+              <option value="square-meters">Square meters</option>
+              <option value="square-centimeters">Square centimeters</option>
+              <option value="square-millimeters">Square millimeters</option>
+              <option value="square-kilometers">Square kilometers</option>
+              <option value="square-inches">Square inches</option>
+              <option value="square-feet">Square feet</option>
+              <option value="square-yards">Square yards</option>
+              <option value="square-miles">Square miles</option>
+              <option value="acres">Acres</option>
+              <option value="hectares">Hectares</option>
+            </select>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertArea()">Convert</button>
+        </form>
+        <p id="area-result"></p>
+      </div>
+
+      <!-- Volume Converter -->
+      <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4">Volume Converter</h2>
+        <form>
+          <div class="flex flex-wrap gap-4 mb-4">
+            <input type="number" id="volume-input" class="w-full md:w-1/2">
+            <select id="volume-unit" class="w-full md:w-1/2">
+              <option value="liters">Liters</option>
+              <option value="milliliters">Milliliters</option>
+              <option value="cubic-meters">Cubic meters</option>
+              <option value="cubic-centimeters">Cubic centimeters</option>
+              <option value="cubic-millimeters">Cubic millimeters</option>
+              <option value="gallons">Gallons</option>
+              <option value="quarts">Quarts</option>
+              <option value="pints">Pints</option>
+              <option value="cups">Cups</option>
+              <option value="fluid-ounces">Fluid ounces</option>
+              <option value="cubic-inches">Cubic inches</option>
+              <option value="cubic-feet">Cubic feet</option>
+              <option value="cubic-yards">Cubic yards</option>
+            </select>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertVolume()">Convert</button>
+        </form>
+        <p id="volume-result"></p>
+      </div>
+
+      <!-- Mass Converter -->
+      <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4">Mass Converter</h2>
+        <form>
+          <div class="flex flex-wrap gap-4 mb-4">
+            <input type="number" id="mass-input" class="w-full md:w-1/2">
+            <select id="mass-unit" class="w-full md:w-1/2">
+              <option value="kilograms">Kilograms</option>
+              <option value="grams">Grams</option>
+              <option value="milligrams">Milligrams</option>
+              <option value="micrograms">Micrograms</option>
+              <option value="ounces">Ounces</option>
+              <option value="pounds">Pounds</option>
+              <option value="tons">Tons</option>
+            </select>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertMass()">Convert</button>
+        </form>
+        <p id="mass-result"></p>
+      </div>
+
+      <!-- Time Converter -->
+      <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4">Time Converter</h2>
+        <form>
+          <div class="flex flex-wrap gap-4 mb-4">
+            <input type="number" id="time-input" class="w-full md:w-1/2">
+            <select id="time-unit" class="w-full md:w-1/2">
+              <option value="seconds">Seconds</option>
+              <option value="minutes">Minutes</option>
+              <option value="hours">Hours</option>
+              <option value="days">Days</option>
+              <option value="weeks">Weeks</option>
+              <option value="months">Months</option>
+              <option value="years">Years</option>
+            </select>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertTime()">Convert</button>
+        </form>
+        <p id="time-result"></p>
+      </div>
+
+      <!-- Speed Converter -->
+      <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4">Speed Converter</h2>
+        <form>
+          <div class="flex flex-wrap gap-4 mb-4">
+            <input type="number" id="speed-input" class="w-full md:w-1/2">
+            <select id="speed-unit" class="w-full md:w-1/2">
+              <option value="meters-per-second">Meters per second</option>
+              <option value="kilometers-per-hour">Kilometers per hour</option>
+              <option value="miles-per-hour">Miles per hour</option>
+              <option value="knots">Knots</option>
+            </select>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertSpeed()">Convert</button>
+        </form>
+        <p id="speed-result"></p>
+      </div>
+
+      <!-- Temperature Converter -->
+      <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4">Temperature Converter</h2>
+        <form>
+          <div class="flex flex-wrap gap-4 mb-4">
+            <input type="number" id="temperature-input" class="w-full md:w-1/2">
+            <select id="temperature-unit" class="w-full md:w-1/2">
+              <option value="celsius">Celsius</option>
+              <option value="fahrenheit">Fahrenheit</option>
+              <option value="kelvin">Kelvin</option>
+            </select>
+        </div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertTemperature()">Convert</button>
+      </form>
+      <p id="temperature-result"></p>
+    </div>
+
+    <!-- Pressure Converter -->
+    <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Pressure Converter</h2>
+      <form>
+        <div class="flex flex-wrap gap-4 mb-4">
+          <input type="number" id="pressure-input" class="w-full md:w-1/2">
+          <select id="pressure-unit" class="w-full md:w-1/2">
+            <option value="pascals">Pascals</option>
+            <option value="kilopascals">Kilopascals</option>
+            <option value="megapascals">Megapascals</option>
+            <option value="bars">Bars</option>
+            <option value="millibars">Millibars</option>
+            <option value="atmospheres">Atmospheres</option>
+            <option value="torr">Torr</option>
+            <option value="pounds-per-square-inch">Pounds per square inch</option>
+          </select>
+        </div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertPressure()">Convert</button>
+      </form>
+      <p id="pressure-result"></p>
+    </div>
+
+    <!-- Energy Converter -->
+    <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Energy Converter</h2>
+      <form>
+        <div class="flex flex-wrap gap-4 mb-4">
+          <input type="number" id="energy-input" class="w-full md:w-1/2">
+          <select id="energy-unit" class="w-full md:w-1/2">
+            <option value="joules">Joules</option>
+            <option value="kilojoules">Kilojoules</option>
+            <option value="megajoules">Megajoules</option>
+            <option value="calories">Calories</option>
+            <option value="kilocalories">Kilocalories</option>
+            <option value="british-thermal-units">British thermal units</option>
+            <option value="electronvolts">Electronvolts</option>
+          </select>
+        </div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertEnergy()">Convert</button>
+      </form>
+      <p id="energy-result"></p>
+    </div>
+
+    <!-- Power Converter -->
+    <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Power Converter</h2>
+      <form>
+        <div class="flex flex-wrap gap-4 mb-4">
+          <input type="number" id="power-input" class="w-full md:w-1/2">
+          <select id="power-unit" class="w-full md:w-1/2">
+            <option value="watts">Watts</option>
+            <option value="kilowatts">Kilowatts</option>
+            <option value="megawatts">Megawatts</option>
+            <option value="horsepower">Horsepower</option>
+          </select>
+        </div>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertPower()">Convert</button>
+      </form>
+      <p id="power-result"></p>
+    </div>
+
+    <!-- Force Converter -->
+    <div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Force Converter</h2>
+      <form>
+        <div class="flex flex-wrap gap-4 mb-4">
+          <input type="number" id="force-input" class="w-full md:w-1/2">
+          <select id="force-unit" class="w-full md:w-1/2">
+            <option value="newtons">Newtons</option>
+            <option value="kilonewtons">Kilonewtons</option>
+            <option value="pounds-force"></option>
+        </select>
+    </div>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertForce()">Convert</button>
+  </form>
+  <p id="force-result"></p>
+</div>
+
+<!-- Angle Converter -->
+<div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-xl font-semibold mb-4">Angle Converter</h2>
+  <form>
+    <div class="flex flex-wrap gap-4 mb-4">
+      <input type="number" id="angle-input" class="w-full md:w-1/2">
+      <select id="angle-unit" class="w-full md:w-1/2">
+        <option value="degrees">Degrees</option>
+        <option value="radians">Radians</option>
+      </select>
+    </div>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertAngle()">Convert</button>
+  </form>
+  <p id="angle-result"></p>
+</div>
+
+<!-- Currency Converter -->
+<div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-xl font-semibold mb-4">Currency Converter</h2>
+  <form>
+    <div class="flex flex-wrap gap-4 mb-4">
+      <input type="number" id="currency-input" class="w-full md:w-1/2">
+      <select id="currency-unit" class="w-full md:w-1/2">
+        <option value="us-dollars">US Dollars</option>
+        <option value="euros">Euros</option>
+        <option value="british-pounds">British Pounds</option>
+        <option value="japanese-yen">Japanese Yen</option>
+        <option value="canadian-dollars">Canadian Dollars</option>
+        <option value="australian-dollars">Australian Dollars</option>
+        <option value="swiss-francs">Swiss Francs</option>
+        <option value="chinese-yuan">Chinese Yuan</option>
+        <option value="indian-rupees">Indian Rupees</option>
+      </select>
+    </div>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertCurrency()">Convert</button>
+  </form>
+  <p id="currency-result"></p>
+</div>
+
+<!-- Data Storage Converter -->
+<div class="w-full md:w-1/2 bg-white p-6 rounded-lg shadow-md">
+  <h2 class="text-xl font-semibold mb-4">Data Storage Converter</h2>
+  <form>
+    <div class="flex flex-wrap gap-4 mb-4">
+      <input type="number" id="data-storage-input" class="w-full md:w-1/2">
+      <select id="data-storage-unit" class="w-full md:w-1/2">
+        <option value="bytes">Bytes</option>
+        <option value="kilobytes">Kilobytes</option>
+        <option value="megabytes">Megabytes</option>
+        <option value="gigabytes">Gigabytes</option>
+        <option value="terabytes">Terabytes</option>
+      </select>
+    </div>
+    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="convertDataStorage()">Convert</button>
+  </form>
+  <p id="data-storage-result"></p>
+</div>
+</div>
+</div>
+
+<script>
+// Length Converter
+function convertLength() {
+const lengthInput = document.getElementById('length-input').value;
+const lengthUnit = document.getElementById('length-unit').value;
+let result;
+
+switch (lengthUnit) {
+  case 'meters':
+    result = lengthInput + ' meters';
+    break;
+  case 'centimeters':
+    result = lengthInput * 100 + ' centimeters';
+    break;
+  case 'millimeters':
+    result = lengthInput * 1000 + ' millimeters';
+    break;
+  case 'kilometers':
+    result = lengthInput / 1000 + ' kilometers';
+    break;
+  case 'inches':
+    result = lengthInput * 39.37 + ' inches';
+    break;
+  case 'feet':
+    result = lengthInput * 3.281 + ' feet';
+    break;
+  case 'yards':
+  result = lengthInput * 3.28084 + ' feet';
+    case 'yards':
+          result = lengthInput * 1.094 + ' yards';
+          break;
+        case 'miles':
+          result = lengthInput / 1609 + ' miles';
+          break;
+        case 'nautical-miles':
+          result = lengthInput / 1852 + ' nautical miles';
+          break;
+        case 'light-years':
+          result = lengthInput / 9.461e12 + ' light years';
+          break;
+      }
+
+      document.getElementById('length-result').innerHTML = result;
+    }
+
+    // Area Converter
+    function convertArea() {
+      const areaInput = document.getElementById('area-input').value;
+      const areaUnit = document.getElementById('area-unit').value;
+      let result;
+
+      switch (areaUnit) {
+        case 'square-meters':
+          result = areaInput + ' square meters';
+          break;
+        case 'square-centimeters':
+          result = areaInput * 10000 + ' square centimeters';
+          break;
+        case 'square-millimeters':
+          result = areaInput * 1000000 + ' square millimeters';
+          break;
+        case 'square-kilometers':
+          result = areaInput / 1000000 + ' square kilometers';
+          break;
+        case 'square-inches':
+          result = areaInput * 1550 + ' square inches';
+          break;
+        case 'square-feet':
+          result = areaInput * 10.764 + ' square feet';
+          break;
+        case 'square-yards':
+          result = areaInput * 1.196 + ' square yards';
+          break;
+        case 'square-miles':
+          result = areaInput / 2589988 + ' square miles';
+          break;
+        case 'acres':
+          result = areaInput / 4047 + ' acres';
+          break;
+        case 'hectares':
+          result = areaInput / 10000 + ' hectares';
+          break;
+      }
+
+      document.getElementById('area-result').innerHTML = result;
+    }
+
+    // Volume Converter
+    function convertVolume() {
+      const volumeInput = document.getElementById('volume-input').value;
+      const volumeUnit = document.getElementById('volume-unit').value;
+      let result;
+
+      switch (volumeUnit) {
+        case 'liters':
+          result = volumeInput + ' liters';
+          break;
+        case 'milliliters':
+          result = volumeInput * 1000 + ' milliliters';
+          break;
+        case 'cubic-meters':
+          result = volumeInput / 1000 + ' cubic meters';
+          break;
+        case 'cubic-centimeters':
+          result = volumeInput * 1000000 + ' cubic centimeters';
+          break;
+        case 'cubic-millimeters':
+          result = volumeInput * 1000000000 + ' cubic millimeters';
+          break;
+        case 'gallons':
+          result = volumeInput * 3.785 + ' gallons';
+          break;
+        case 'quarts':
+          result = volumeInput * 1.057 + ' quarts';
+          break;
+        case 'pints':
+          result = volumeInput * 2.113 + ' pints';
+          break;
+        case 'cups':
+          result = volumeInput * 4.227 + ' cups';
+          break;
+        case 'fluid-ounces':
+          result = volumeInput * 33.814 + ' fluid ounces';
+          break;
+        case 'cubic-inches':
+          result = volumeInput * 61.024 + ' cubic inches';
+          break;
+        case 'cubic-feet':
+          result = volumeInput * 35.315 + ' cubic feet';
+          break;
+        case 'cubic-yards':
+          result = volumeInput * 1.308 + ' cubic yards';
+          break;
+      }
+
+      document.getElementById('volume-result').innerHTML = result;
+    }
+
+    // Mass Converter
+    function convertMass() {
+      const massInput = document.getElementById('mass-input').value;
+      const massUnit = document.getElementById('mass-unit').value;
+      let result;
+
+      switch (massUnit) {
+        case 'kilograms':
+          result = massInput + ' kilograms';
+          break;
+        case 'grams':
+          result = massInput * 1000 + ' grams';
+          break;
+        case 'milligrams':
+          result = massInput * 1000000 + ' milligrams';
+          break;
+        case 'micrograms':
+          result = massInput * 1000000000 + ' micrograms';
+          break;
+        case 'ounces':
+          result = massInput * 35.274 + ' ounces';
+          break;
+        case 'pounds':
+          result = massInput * 2.205 + ' pounds';
+          break;
+        case 'tons':
+          result = massInput / 1000 + ' tons';
+          break;
+      }
+
+      document.getElementById('mass-result').
+      document.getElementById('mass-result').innerHTML = result;
+    }
+
+    // Time Converter
+    function convertTime() {
+      const timeInput = document.getElementById('time-input').value;
+      const timeUnit = document.getElementById('time-unit').value;
+      let result;
+
+      switch (timeUnit) {
+        case 'seconds':
+          result = timeInput + ' seconds';
+          break;
+        case 'minutes':
+          result = timeInput * 60 + ' seconds';
+          break;
+        case 'hours':
+          result = timeInput * 3600 + ' seconds';
+          break;
+        case 'days':
+          result = timeInput * 86400 + ' seconds';
+          break;
+        case 'weeks':
+          result = timeInput * 604800 + ' seconds';
+          break;
+        case 'months':
+          result = timeInput * 2629743 + ' seconds';
+          break;
+        case 'years':
+          result = timeInput * 31556952 + ' seconds';
+          break;
+      }
+
+      document.getElementById('time-result').innerHTML = result;
+    }
+
+    // Speed Converter
+    function convertSpeed() {
+      const speedInput = document.getElementById('speed-input').value;
+      const speedUnit = document.getElementById('speed-unit').value;
+      let result;
+
+      switch (speedUnit) {
+        case 'meters-per-second':
+          result = speedInput + ' meters per second';
+          break;
+        case 'kilometers-per-hour':
+          result = speedInput * 3.6 + ' kilometers per hour';
+          break;
+        case 'miles-per-hour':
+          result = speedInput * 2.237 + ' miles per hour';
+          break;
+        case 'knots':
+          result = speedInput * 1.943 + ' knots';
+          break;
+      }
+
+      document.getElementById('speed-result').innerHTML = result;
+    }
+
+    // Temperature Converter
+    function convertTemperature() {
+      const temperatureInput = document.getElementById('temperature-input').value;
+      const temperatureUnit = document.getElementById('temperature-unit').value;
+      let result;
+
+      switch (temperatureUnit) {
+        case 'celsius':
+          result = temperatureInput + ' degrees Celsius';
+          break;
+        case 'fahrenheit':
+          result = temperatureInput * 9/5 + 32 + ' degrees Fahrenheit';
+          break;
+        case 'kelvin':
+          result = temperatureInput + 273.15 + ' Kelvin';
+          break;
+      }
+
+      document.getElementById('temperature-result').innerHTML = result;
+    }
+
+    // Pressure Converter
+    function convertPressure() {
+      const pressureInput = document.getElementById('pressure-input').value;
+      const pressureUnit = document.getElementById('pressure-unit').value;
+      let result;
+
+      switch (pressureUnit) {
+        case 'pascals':
+          result = pressureInput + ' Pascals';
+          break;
+        case 'kilopascals':
+          result = pressureInput * 1000 + ' Pascals';
+          break;
+        case 'megapascals':
+          result = pressureInput * 1000000 + ' Pascals';
+          break;
+        case 'bars':
+          result = pressureInput * 100000 + ' Pascals';
+          break;
+        case 'millibars':
+          result = pressureInput * 100 + ' Pascals';
+          break;
+        case 'atmospheres':
+          result = pressureInput * 101325 + ' Pascals';
+          break;
+        case 'torr':
+          result = pressureInput * 133.322 + ' Pascals';
+          break;
+        case 'pounds-per-square-inch':
+          result = pressureInput * 6894.76 + ' Pascals';
+          break;
+      }
+
+      document.getElementById('pressure-result').innerHTML = result;
+    }
+
+    // Energy Converter
+    function convertEnergy() {
+      const energyInput = document.getElementById('energy-input').value;
+      const energyUnit = document.getElementById('energy-unit').value;
+      let result;
+
+      switch (energyUnit) {
+        case 'joules':
+          result = energyInput + ' Joules';
+          break;
+        case 'kilojoules':
+          result = energyInput * 1000 + ' Joules';
+          break;
+        case 'megajoules':
+          result = energyInput * 1000000 + ' Joules';
+          break;
+        case 'calories':
+          result = energyInput * 4.184 + ' Joules';
+          break;
+        case 'kilocalories':
+          result = energyInput * 4184 + ' Joules';
+          break;
+        case 'british-thermal-units':
+          result = energyInput * 1055.056 + ' Joules';
+          break;
+        case 'electronvolts':
+          result = energyInput * 1.602e-19 + ' Joules';
+          break;
+      }
+
+      document.getElementById('energy-result').
+      document.getElementById('energy-result').innerHTML = result;
+    }
+
+    // Power Converter
+    function convertPower() {
+      const powerInput = document.getElementById('power-input').value;
+      const powerUnit = document.getElementById('power-unit').value;
+      let result;
+
+      switch (powerUnit) {
+        case 'watts':
+          result = powerInput + ' Watts';
+          break;
+        case 'kilowatts':
+          result = powerInput * 1000 + ' Watts';
+          break;
+        case 'megawatts':
+          result = powerInput * 1000000 + ' Watts';
+          break;
+        case 'horsepower':
+          result = powerInput * 745.7 + ' Watts';
+          break;
+      }
+
+      document.getElementById('power-result').innerHTML = result;
+    }
+
+    // Force Converter
+    function convertForce() {
+      const forceInput = document.getElementById('force-input').value;
+      const forceUnit = document.getElementById('force-unit').value;
+      let result;
+
+      switch (forceUnit) {
+        case 'newtons':
+          result = forceInput + ' Newtons';
+          break;
+        case 'kilonewtons':
+          result = forceInput * 1000 + ' Newtons';
+          break;
+        case 'pounds-force':
+          result = forceInput * 4.448 + ' Newtons';
+          break;
+      }
+
+      document.getElementById('force-result').innerHTML = result;
+    }
+
+    // Angle Converter
+    function convertAngle() {
+      const angleInput = document.getElementById('angle-input').value;
+      const angleUnit = document.getElementById('angle-unit').value;
+      let result;
+
+      switch (angleUnit) {
+        case 'degrees':
+          result = angleInput + ' degrees';
+          break;
+        case 'radians':
+          result = angleInput * Math.PI / 180 + ' radians';
+          break;
+      }
+
+      document.getElementById('angle-result').innerHTML = result;
+    }
+
+    // Currency Converter
+    function convertCurrency() {
+      const currencyInput = document.getElementById('currency-input').value;
+      const currencyUnit = document.getElementById('currency-unit').value;
+      let result;
+
+      switch (currencyUnit) {
+        case 'us-dollars':
+          result = currencyInput + ' US Dollars';
+          break;
+        case 'euros':
+          result = currencyInput * 0.88 + ' Euros';
+          break;
+        case 'british-pounds':
+          result = currencyInput * 0.76 + ' British Pounds';
+          break;
+        case 'japanese-yen':
+          result = currencyInput * 109.52 + ' Japanese Yen';
+          break;
+        case 'canadian-dollars':
+          result = currencyInput * 1.31 + ' Canadian Dollars';
+          break;
+        case 'australian-dollars':
+          result = currencyInput * 1.48 + ' Australian Dollars';
+          break;
+        case 'swiss-francs':
+          result = currencyInput * 0.93 + ' Swiss Francs';
+          break;
+        case 'chinese-yuan':
+          result = currencyInput * 6.47 + ' Chinese Yuan';
+          break;
+        case 'indian-rupees':
+          result = currencyInput * 74.83 + ' Indian Rupees';
+          break;
+      }
+
+      document.getElementById('currency-result').innerHTML = result;
+    }
+
+    // Data Storage Converter
+    function convertDataStorage() {
+      const dataStorageInput = document.getElementById('data-storage-input').value;
+      const dataStorageUnit = document.getElementById('data-storage-unit').value;
+      let result;
+
+      switch (dataStorageUnit) {
+        case 'bytes':
+          result = dataStorageInput + ' bytes';
+          break;
+        case 'kilobytes':
+          result = dataStorageInput * 1024 + ' bytes';
+          break;
+        case 'megabytes':
+          result = dataStorageInput * 1048576 + ' bytes';
+          break;
+        case 'gigabytes':
+          result = dataStorageInput * 1073741824 + ' bytes';
+          break;
+        case 'terabytes':
+          result = dataStorageInput * 1099511627776 + ' bytes';
+          break;
+      }
+
+      document.getElementById('data-storage-result').innerHTML = result;
+    }
+  </script>
+</body>
+</html>

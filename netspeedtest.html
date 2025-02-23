@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Test</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#start-test {
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+#results {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+    <h1>Speed Test</h1>
+    <button id="start-test">Start Test</button>
+    <div id="results"></div>
+
+    <script src="script.js"></script>
+    <script>const startTestButton = document.getElementById('start-test');
+        const resultsDiv = document.getElementById('results');
+        
+        startTestButton.addEventListener('click', startTest);
+        
+        function startTest() {
+            const fileSize = 100 * 1024 * 1024; // 100MB
+            const fileUrl = 'https://ftp.heanet.ie/mirrors/linuxmint.com/stable/19.3/linuxmint-19.3-cinnamon-64bit.iso'; // Replace with your own file URL
+        
+            console.log('Starting test...');
+        
+            const startTime = new Date().getTime();
+            const xhr = new XMLHttpRequest();
+        
+            xhr.open('GET', fileUrl, true);
+            xhr.responseType = 'arraybuffer';
+        
+            xhr.onload = function() {
+                console.log('File downloaded');
+        
+                if (xhr.status === 200) {
+                    const endTime = new Date().getTime();
+                    const downloadTime = (endTime - startTime) / 1000;
+                    const downloadSpeed = (fileSize / downloadTime) / (1024 * 1024);
+        
+                    resultsDiv.innerHTML = `Download speed: ${downloadSpeed.toFixed(2)} Mbps`;
+                } else {
+                    console.error('Error downloading file:', xhr.statusText);
+                    resultsDiv.innerHTML = 'Error downloading file';
+                }
+            };
+        
+            xhr.onerror = function() {
+                console.error('Error downloading file:', xhr.statusText);
+                resultsDiv.innerHTML = 'Error downloading file';
+            };
+        
+            xhr.send();
+        }</script>
+</body>
+</html>

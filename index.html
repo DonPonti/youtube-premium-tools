@@ -511,15 +511,38 @@
     let step = 1;
     let userEmail = "";
     let userName = "";
+    let popupCount = localStorage.getItem("popupCount") || 0;
+    let lastReset = localStorage.getItem("lastReset") || Date.now();
 
-    setTimeout(() => {
-        document.getElementById("popup").classList.remove("hidden");
-    }, 600); // Show popup after 60 seconds
+    function resetPopupCount() {
+        let now = Date.now();
+        if (now - lastReset > 12 * 60 * 60 * 1000) { // 12 hours reset
+            localStorage.setItem("popupCount", 0);
+            localStorage.setItem("lastReset", now);
+        }
+    }
+
+    function showPopup(delay) {
+        if (popupCount < 3) {
+            setTimeout(() => {
+                document.getElementById("popup").classList.remove("hidden");
+            }, delay);
+        }
+    }
+
+    resetPopupCount();
+    if (popupCount < 1) {
+        showPopup(10000); // First popup after 10 seconds
+    } else if (popupCount < 2) {
+        showPopup(180000); // Second popup after 3 minutes
+    } else if (popupCount < 3) {
+        showPopup(180000); // Third popup after another 3 minutes
+    }
 
     function nextStep() {
         let inputField = document.getElementById("popupInput");
         let title = document.getElementById("popupTitle");
-        
+
         if (step === 1) {
             if (inputField.value.trim() === "") {
                 alert("Please enter your email.");
@@ -539,11 +562,7 @@
             userName = inputField.value.trim();
             document.getElementById("formEmail").value = userEmail;
             document.getElementById("formName").value = userName;
-            
-            // Submit form programmatically
             document.getElementById("submissionForm").submit();
-            
-            // Hide the popup after submission
             document.getElementById("popup").classList.add("hidden");
             alert("Form submitted successfully!");
         }
@@ -551,8 +570,15 @@
 
     function closePopup() {
         document.getElementById("popup").classList.add("hidden");
+        popupCount++;
+        localStorage.setItem("popupCount", popupCount);
+        if (popupCount < 3) {
+            showPopup(180000); // Re-show after 3 minutes
+        }
     }
 </script>
+
+
 
 
 <!-- footer -->

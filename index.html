@@ -10,17 +10,7 @@
 </head>
 
 <body>
-  <div class="flex items-center justify-center  bg-gray-100">
-    <!-- Popup Form -->
-    <div id="popup" class="hidden fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
-            <h2 id="popupTitle" class="text-xl font-semibold mb-3">Enter Your Email</h2>
-            <input id="popupInput" type="email" placeholder="Enter Email" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button onclick="nextStep()" class="w-full bg-blue-500 text-white mt-3 p-2 rounded-md hover:bg-blue-600">Next</button>
-            <button onclick="closePopup()" class="w-full mt-2 text-gray-500">Close</button>
-        </div>
-    </div>
-</div>
+  
     
 
     <nav>
@@ -273,78 +263,7 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
-  <script>
-    let step = 1;
-    let userEmail = "";
-    let userName = "";
-    let popupCount = localStorage.getItem("popupCount") || 0;
-    let lastReset = localStorage.getItem("lastReset") || Date.now();
-
-    function resetPopupCount() {
-        let now = Date.now();
-        if (now - lastReset > 12 * 60 * 60 * 1000) { // 12 hours reset
-            localStorage.setItem("popupCount", 0);
-            localStorage.setItem("lastReset", now);
-        }
-    }
-
-    function showPopup(delay) {
-        if (popupCount < 3) {
-            setTimeout(() => {
-                document.getElementById("popup").classList.remove("hidden");
-            }, delay);
-        }
-    }
-
-    resetPopupCount();
-    if (popupCount < 1) {
-        showPopup(10000); // First popup after 10 seconds
-    } else if (popupCount < 2) {
-        showPopup(180000); // Second popup after 3 minutes
-    } else if (popupCount < 3) {
-        showPopup(180000); // Third popup after another 3 minutes
-    }
-
-    function nextStep() {
-        let inputField = document.getElementById("popupInput");
-        let title = document.getElementById("popupTitle");
-
-        if (step === 1) {
-            if (inputField.value.trim() === "") {
-                alert("Please enter your email.");
-                return;
-            }
-            userEmail = inputField.value.trim();
-            step++;
-            title.textContent = "Enter Your Name";
-            inputField.value = "";
-            inputField.type = "text";
-            inputField.placeholder = "Enter Name";
-        } else {
-            if (inputField.value.trim() === "") {
-                alert("Please enter your name.");
-                return;
-            }
-            userName = inputField.value.trim();
-            document.getElementById("formEmail").value = userEmail;
-            document.getElementById("formName").value = userName;
-            document.getElementById("submissionForm").submit();
-            document.getElementById("popup").classList.add("hidden");
-            alert("Form submitted successfully!");
-        }
-    }
-
-    function closePopup() {
-        document.getElementById("popup").classList.add("hidden");
-        popupCount++;
-        localStorage.setItem("popupCount", popupCount);
-        if (popupCount < 3) {
-            showPopup(180000); // Re-show after 3 minutes
-        }
-    }
-</script>
-
+  
 
 
 
@@ -355,10 +274,10 @@
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
       </svg>
-      <span class="ml-3 text-xl">Emprux</span>
+      <span class="ml-3 text-xl">Kokomi Image Processing</span>
     </a>
     <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">© 2025 Tailblocks —
-      <a href="https://twitter.com/himoonshu" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">@himoonshu</a>
+      <a href="https://twitter.com/" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">@himoonshu</a>
     </p>
     <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
       <a class="text-gray-500">
